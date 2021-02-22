@@ -53,19 +53,36 @@ Useful commands:
 `strings -e L -n 6 file`: Extact 32bit strings \(little-endian\)  
 `strings -e B -n 6 file`: Extact 32bit strings \(big-endian\)
 
+### cmp - Comparison
+
+If you have some **modified** image/audio/video, check if you can **find the exact original one** from the internet and **compare both** files:
+
+```text
+cmp original.jpg stego.jpg -b -l
+```
+
 ## Extracting hidden data in text
 
 ### Hidden data in spaces
 
-If you find that a **text line** is **bigger** than it should, then some **hidden information** could by included inside the **spaces** usnig invisible characters.󐁈󐁥󐁬󐁬󐁯󐀠󐁴󐁨  
+If you find that a **text line** is **bigger** than it should, then some **hidden information** could by included inside the **spaces** using invisible characters.󐁈󐁥󐁬󐁬󐁯󐀠󐁴󐁨  
 To **extract** the **data** you can use: [https://www.irongeek.com/i.php?page=security/unicode-steganography-homoglyph-encoder](https://www.irongeek.com/i.php?page=security/unicode-steganography-homoglyph-encoder)
 
 ## Extracting data from images
 
 ### identify
 
- [GraphicMagick](http://www.graphicsmagick.org/) tool to check what kind of image a file is. Checks also if image is corrupted.  
- `identify -verbose stego.jpg`
+ [GraphicMagick](https://imagemagick.org/script/download.php) tool to check what kind of image a file is. Checks also if image is corrupted.
+
+```text
+./magick identify -verbose stego.jpg
+```
+
+If the image is damage, you may be able to restore it just adding a metadata comment to it \(it's badly damaged this won't work\): 
+
+```bash
+./magick mogrify -set comment 'Extraneous bytes removed' stego.jpg
+```
 
 ### Steghide \[JPEG, BMP, WAV, AU\] <a id="steghide"></a>
 
@@ -87,14 +104,14 @@ Install it : `gem install zsteg` , The source can be found on [github](https://g
  `zsteg -a file` : Runs all the methods on the given file  
  `zsteg -E file` : Extracts data from the given payload \(example : zsteg -E b4,bgr,msb,xy name.png\)
 
-### stegoVeritasJPG, PNG, GIF, TIFF, BMP 
+### stegoVeritas JPG, PNG, GIF, TIFF, BMP 
 
 A wide variety of simple and advanced checks. Check out `stegoveritas.py -h`. Checks metadata, creates many transformed images and saves them to a directory, Brute forces LSB, ...  
  `stegoveritas.py stego.jpg` to run all checks
 
 ### Stegsolve
 
-Sometimes there is a message or a text hidden in the image itself and in order to view it you need to apply some color filters or play with the color levels. You can do it with GIMP or Photoshop or any other image editing software but stegsolve made it easier. it’s a small java tool that applies many color filters on images. Personally i find it very useful  
+Sometimes there is a message or a text hidden in the image itself and in order to view it you need to apply some color filters or play with the color levels. You can do it with GIMP or Photoshop or any other image editing software but stegsolve made it easier. it’s a small java tool that applies many color filters on images. Personally I find it very useful.  
 You can get it from [github](https://github.com/eugenekolo/sec-tools/tree/master/stego/stegsolve/stegsolve)  
 Just open the image with this tool and clinck on the  `<`  `>` buttons.
 

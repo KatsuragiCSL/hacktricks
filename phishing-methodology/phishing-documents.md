@@ -1,4 +1,4 @@
-# Phising Documents
+# Phishing Documents
 
 Microsoft Word performs file data validation prior to opening a file. Data validation is performed in the form of data structure identification, against the OfficeOpenXML standard. If any error occurs during the data structure identification, the file being analysed will not be opened.
 
@@ -19,7 +19,7 @@ DOCX files referencing a remote template \(File –Options –Add-ins –Manage:
 Go to: _Insert --&gt; Quick Parts --&gt; Field_  
 _**Categories**: Links and References, **Filed names**: includePicture, and **Filename or URL**: http://&lt;ip&gt;/whatever_
 
-![](.gitbook/assets/image%20%28347%29.png)
+![](../.gitbook/assets/image%20%28347%29.png)
 
 ### Macros Code
 
@@ -37,4 +37,4 @@ The more common they are, the more probable the AV will detect it.
 
 * AutoOpen\(\)
 * Document\_Open\(\)
-* 
+
